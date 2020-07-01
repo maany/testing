@@ -2,7 +2,21 @@ import React, {Component} from "react";
 import './Navigation.css';
 
 export default class Navigation extends Component {
-    
+    constructor(props){
+        super(props);
+        this.state = {
+            initial_position: 0,
+            final_position: 0
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+        // swap order in props based on increment or decrement in position
+        var temp = this.props.locations[nextState.initial_position]
+        nextProps.locations[nextState.initial_position] = this.props.locations[nextState.final_position]
+        nextProps.locations[nextState.final_position] = temp;
+        return nextProps
+    }
     // Used for rendering
     getClasses(ctx, index) {
         let classes = `material-icons ${ctx}`;
@@ -45,12 +59,20 @@ export default class Navigation extends Component {
                                     <div>
                                         
                                        {index != 0 && 
-                                            <button className="icon-only small mx-0" data-testid="up-button">
+                                            <button className="icon-only small mx-0" data-testid="up-button"
+                                                onClick = { () =>{ 
+                                                    this.setState({initial_position: index, final_position: index - 1})
+                                                }}
+                                            >
                                                 <i className="material-icons">arrow_upward</i>
                                             </button>
                                         }
                                         { index != this.props.locations.length - 1 &&
-                                            <button className="icon-only small mx-0" data-testid="down-button">
+                                            <button className="icon-only small mx-0" data-testid="down-button"
+                                                onClick = { () =>{ 
+                                                    this.setState({initial_position: index, final_position: index + 1})
+                                                }}
+                                            >
                                                 <i className="material-icons">arrow_downward</i>
                                             </button>
                                         }

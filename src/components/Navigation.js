@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import './Navigation.css';
 
 export default class Navigation extends Component {
-
+    
     // Used for rendering
     getClasses(ctx, index) {
         let classes = `material-icons ${ctx}`;
@@ -43,12 +43,17 @@ export default class Navigation extends Component {
                                         <p className="caption text-start mb-4" data-testid="location">{location}</p>
                                      </div>
                                     <div>
-                                       <button className="icon-only small mx-0" data-testid="up-button">
-                                            <i className="material-icons">arrow_upward</i>
-                                        </button>
-                                        <button className="icon-only small mx-0" data-testid="down-button">
-                                           <i className="material-icons">arrow_downward</i>
-                                        </button>
+                                        
+                                       {index != 0 && 
+                                            <button className="icon-only small mx-0" data-testid="up-button">
+                                                <i className="material-icons">arrow_upward</i>
+                                            </button>
+                                        }
+                                        { index != this.props.locations.length - 1 &&
+                                            <button className="icon-only small mx-0" data-testid="down-button">
+                                                <i className="material-icons">arrow_downward</i>
+                                            </button>
+                                        }
                                     </div>
                                 </li>
                                 )
